@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import {
-  Button, Image,Row,Col,Icon,Sticky
+  Button, Image,Row,Col,Icon,Sticky,Dialog,Overlay
 } from 'vant'
 
 Vue.use(Button)
@@ -9,5 +9,7 @@ Vue.use(Button)
   .use(Col)
   .use(Icon)
   .use(Sticky)
+  .use(Dialog)
+  .use(Overlay)
 
 

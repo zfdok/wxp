@@ -28,12 +28,21 @@
     <van-button color="#7232dd" round @click="xixiSelect(4)">4</van-button>
     <van-button color="#7232dd" round @click="xixiSelect(5)">5</van-button>
     <van-button color="#7232dd" round @click="xixiSelect(6)">6</van-button>
-    <van-button color="#7232dd" round @click="xixiSelect(8)">👨</van-button>
+    <van-button color="#7232dd" round>👨</van-button>
     <van-button color="#7232dd" round @click="xixiSelect(7)">7</van-button>
-    <van-button color="#7232dd" round @click="test">👩</van-button>
+    <van-button color="#7232dd" round>👩</van-button>
+    <van-overlay :show="rightshow" @click="rightshow = false">
+      <div class="result-div">
+        <van-image width="70%" height="70%" src="https://s1.ax1x.com/2020/03/23/87qbQS.png"></van-image>
+      </div>
+    </van-overlay>
+    <van-overlay :show="wrongshow" @click="wrongshow = false">
+      <div class="result-div">
+        <van-image width="70%" height="70%" src="https://s1.ax1x.com/2020/03/23/87qqsg.png"></van-image>
+      </div>
+    </van-overlay>
   </div>
 </template>
-
 <script>
 // // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
@@ -43,6 +52,8 @@ export default {
   name: "Home",
   data() {
     return {
+      rightshow: false,
+      wrongshow: false,
       wxpList: [],
       nowTesting: {},
       right: 0,
@@ -53,22 +64,17 @@ export default {
   components: {},
   methods: {
     xixiSelect(value) {
-      console.log(value);
-      Dialog.alert({
-        title: "标题",
-        message: "弹窗内容"
-      }).then(() => {
-        if (value === this.nowTesting.voice) {
-          this.right++;
-        } else {
-          this.wrong++;
-          this.needLearn.push(this.nowTesting.name);
-          console.log(this.needLearn);
-        }
-        this.wxpList.splice(0, 1);
-        console.log(this.wxpList.length);
-        this.getNowTest();
-      });
+      if (value === this.nowTesting.voice) {
+        this.right++;
+        this.rightshow = true;
+      } else {
+        this.wrong++;
+        this.needLearn.push(this.nowTesting.name);
+        console.log(this.needLearn);
+        this.wrongshow = true;
+      }
+      this.wxpList.splice(0, 1);
+      this.getNowTest();
     },
     getNowTest() {
       if (this.wxpList.length) {
@@ -78,9 +84,8 @@ export default {
         if (this.needLearn.length) {
           Dialog.alert({
             title: "标题",
-            message: "弹窗内容"
+            message: "这些还需要学:" + this.needLearn
           }).then(() => {
-            console.log("这些还需要学:" + this.needLearn);
             this.$router.push("/alldone");
           });
         } else {
@@ -142,5 +147,9 @@ export default {
 }
 .van-icon {
   margin: 1rem;
+}
+.result-div {
+  width: 100%;
+  padding: 3rem;
 }
 </style>

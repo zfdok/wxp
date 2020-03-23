@@ -18,6 +18,7 @@ export default {
   background-color: #ecf0f1;
   height: 100%;
   width: 100%;
-  position: absolute
+  position: absolute;
+  overflow: hidden;
 }
 </style>
